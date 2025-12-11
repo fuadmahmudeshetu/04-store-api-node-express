@@ -6,8 +6,10 @@ const getAllProductsStatic = async (req, res, next) => {
 }
 
 const getAllProducts = async (req, res) => {
+    const products = await Product.find(req.query)
     console.log(req.query);
-    res.status(200).json({ msg: 'products rout'})
+    
+    res.status(200).json({ products, nbHits: products.length })
 }
 
 module.exports = {
