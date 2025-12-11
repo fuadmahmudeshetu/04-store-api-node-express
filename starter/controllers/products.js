@@ -1,7 +1,7 @@
 const Product = require('../models/product')
 
 const getAllProductsStatic = async (req, res, next) => {
-    const products = await Product.find({ featured:false })
+    const products = await Product.find({ name : 'vase table' })
     res.status(200).json({ products, nbHits: products.length })
 }
 
