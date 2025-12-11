@@ -1,6 +1,9 @@
-require('nodemon').config
+require('dotenv').config()
+// async errors
+
 const express = require('express')
 const app = express()
+const connectDB = require('./db/connect')
 
 const notFoundMiddleware = require('./middleware/not-found');
 const errorMiddleware = require('./middleware/error-handler');
@@ -15,12 +18,15 @@ app.get('/', (req,res)=>{
     res.send('<h1>Product api</h1><a href="/api/v1/products">Go To Products Page</a>')
 })
 
+
 app.use(errorMiddleware)
 app.use(notFoundMiddleware)
 
 
 const start = async () => {
     try {
+        //ConnectDB
+        await connectDB(process.env.MONGO_URI)
         app.listen(port, () => console.log(`server is listening on the port ${port}`))
     } catch (error) {
         console.log(error)
