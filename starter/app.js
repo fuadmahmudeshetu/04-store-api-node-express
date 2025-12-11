@@ -1,12 +1,30 @@
-require('nodemon').config()
+require('nodemon').config
 const express = require('express')
 const app = express()
 
-const port = 3000
+const notFoundMiddleware = require('./middleware/not-found');
+const errorMiddleware = require('./middleware/error-handler');
+
+// Middleware
+
+app.use(express.json())
+
+const port = process.env.PORT || 3000
 
 app.get('/', (req,res)=>{
-    res.json({ name: 'Fuad'})
+    res.send('<h1>Product api</h1><a href="/api/v1/products">Go To Products Page</a>')
 })
 
-app.listen(port, ()=> console.log(`server is listening on the port ${port}`)
-)
+app.use(errorMiddleware)
+app.use(notFoundMiddleware)
+
+
+const start = async () => {
+    try {
+        app.listen(port, () => console.log(`server is listening on the port ${port}`))
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+start()
