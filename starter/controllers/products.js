@@ -19,7 +19,7 @@ const getAllProducts = async (req, res) => {
     }
     
     if(name) {
-        queryObject.name = { $regex: e, $options: 'i'}
+        queryObject.name = { $regex: name, $options: 'i'}
     }
 
     // console.log(queryObject)
